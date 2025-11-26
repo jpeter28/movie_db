@@ -31,6 +31,12 @@ analysis_benchmark.json
 # packages file containing multi-root paths
 .packages.generated
 
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
