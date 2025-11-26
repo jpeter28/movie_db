@@ -8,7 +8,7 @@ class SearchMovieRepositoryImpl implements SearchMovieRepository {
   SearchMovieRepositoryImpl({required this.movieDataSource});
 
   @override
-  Future<List<Movie>> searchMovies(String query) async {
-    return await movieDataSource.searchMovies(query);
+  Future<List<Movie>> searchMovies(String query, int page) async {
+    return await movieDataSource.searchMovies(query, page);
   }
 }

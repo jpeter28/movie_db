@@ -8,11 +8,11 @@ class SearchMovieRemoteDataSourceImpl implements SearchMovieDataSource {
   SearchMovieRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<List<MovieModel>> searchMovies(String query) async {
+  Future<List<MovieModel>> searchMovies(String query, int page) async {
     try {
       final response = await dio.get(
         '/search/movie',
-        queryParameters: {'query': query},
+        queryParameters: {'query': query, 'page': page},
       );
 
       final results = response.data['results'] as List<dynamic>;

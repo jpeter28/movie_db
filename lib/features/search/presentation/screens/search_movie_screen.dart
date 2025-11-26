@@ -5,8 +5,31 @@ import 'package:movie_db/features/search/presentation/bloc/search_movie_event.da
 import 'package:movie_db/features/search/presentation/bloc/search_movie_state.dart';
 import 'package:movie_db/features/search/presentation/widgets/movie_list_item.dart';
 
-class SearchMovieScreen extends StatelessWidget {
+class SearchMovieScreen extends StatefulWidget {
   const SearchMovieScreen({super.key});
+
+  @override
+  State<SearchMovieScreen> createState() => _SearchMovieScreenState();
+}
+
+class _SearchMovieScreenState extends State<SearchMovieScreen> {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        context.read<SearchMovieBloc>().add(LoadMoreMoviesEvent());
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +74,7 @@ class SearchMovieScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchMovieResult) {
                   return ListView.builder(
+                    controller: _controller,
                     itemCount: state.movies.length,
                     itemBuilder: (context, index) {
                       final movie = state.movies[index];

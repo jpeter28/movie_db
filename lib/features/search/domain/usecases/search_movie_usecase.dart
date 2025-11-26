@@ -6,7 +6,7 @@ class SearchMoviesUseCase {
 
   SearchMoviesUseCase(this.repository);
 
-  Future<List<Movie>> execute(String query) async {
-    return await repository.searchMovies(query);
+  Future<List<Movie>> execute(String query, int page) async {
+    return await repository.searchMovies(query, page);
   }
 }
