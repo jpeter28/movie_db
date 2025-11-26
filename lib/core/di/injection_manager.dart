@@ -2,6 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:movie_db/features/detail/data/datasources/movie_detail_data_source.dart';
+import 'package:movie_db/features/detail/data/datasources/remote/movie_detail_remote_data_source.dart';
+import 'package:movie_db/features/detail/data/repositories/movie_detail_repository_impl.dart';
+import 'package:movie_db/features/detail/domain/repositories/movie_detail_repository.dart';
+import 'package:movie_db/features/detail/domain/usecases/movie_detail_usecase.dart';
 import 'package:movie_db/features/search/data/datasources/search_movie_data_source.dart';
 import 'package:movie_db/features/search/data/datasources/remote/search_movie_remote_data_source.dart';
 import 'package:movie_db/features/search/data/repositories/search_movie_repository_impl.dart';
@@ -23,6 +28,18 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<SearchMoviesUseCase>(
     () => SearchMoviesUseCase(sl()),
+  );
+
+  sl.registerLazySingleton<MovieDetailDataSource>(
+        () => MovieDetailRemoteDataSourceImpl(dio: sl()),
+  );
+
+  sl.registerLazySingleton<MovieDetailRepository>(
+        () => MovieDetailRepositoryImpl(dataSource: sl()),
+  );
+
+  sl.registerLazySingleton<MovieDetailUseCase>(
+        () => MovieDetailUseCase(sl()),
   );
 }
 

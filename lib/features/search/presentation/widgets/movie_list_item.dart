@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movie_db/features/search/domain/entities/movie.dart';
 import 'package:movie_db/features/search/presentation/widgets/movie_info.dart';
 import 'package:movie_db/features/search/presentation/widgets/movie_poster.dart';
@@ -10,17 +11,22 @@ class MovieListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MoviePoster(posterPath: movie.posterPath),
-            const SizedBox(width: 20),
-            MovieInfo(movie: movie),
-          ],
+    return InkWell(
+      onTap: () {
+        context.push('/details/${movie.id}');
+      },
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MoviePoster(posterPath: movie.posterPath),
+              const SizedBox(width: 20),
+              MovieInfo(movie: movie),
+            ],
+          ),
         ),
       ),
     );
